@@ -7,9 +7,11 @@ export default {
         './pages/**/*.{html,js,jsx,ts,tsx}',
         './styles/**/*.{html,js,jsx,ts,tsx}',
     ],
-
     theme: {
-        extend: {},
+        fontFamily: {
+            pre: ['Pretendard'],
+        },
     },
+
     plugins: [],
 };
