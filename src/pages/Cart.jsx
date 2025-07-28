@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { increase, decrease } from '../stores/store.js';
 import { useDispatch } from 'react-redux';
+import { changeName } from '../stores/store.js';
 import cartData from '../data/cart.js';
 import { ShopHeader } from './shop.jsx';
 
@@ -47,6 +48,7 @@ const AmountBtn = ({ amount, id }) => {
 
 const CartProduct = () => {
     let state = useSelector((state) => state);
+    const dispatch = useDispatch();
     return (
         <>
             {state.cart.map((item, index) => (
@@ -97,7 +99,10 @@ const CartProduct = () => {
                             ).toLocaleString()}
                             원
                         </div>
-                        <div className="flex items-center justify-center w-24 h-8 text-sm text-white bg-black rounded-sm font-pre">
+                        <div
+                            onClick={() => dispatch(changeName())}
+                            className="flex items-center justify-center w-24 h-8 text-sm text-white bg-black rounded-sm font-pre"
+                        >
                             바로 구매하기
                         </div>
                     </div>
@@ -149,6 +154,7 @@ const TotalProduct = () => {
 
 const Cart = () => {
     let a = useSelector((state) => state.user);
+
     console.log(a);
 
     return (

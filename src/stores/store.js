@@ -3,6 +3,11 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 let user = createSlice({
     name: 'user',
     initialState: 'kim',
+    reducers: {
+        changeName(state) {
+            return 'john ' + state;
+        },
+    },
 });
 
 let cart = createSlice({
@@ -45,6 +50,8 @@ let cart = createSlice({
 });
 
 export const { increase, decrease } = cart.actions;
+export let { changeName } = user.actions;
+
 export default configureStore({
     reducer: {
         user: user.reducer,
