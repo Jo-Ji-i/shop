@@ -25,3 +25,12 @@
         url('./assets/fonts/Pretendard-Bold.woff') format('woff'),
         url('./assets/fonts/Pretendard-Bold.woff2') format('woff2');
 }
+
+.start {
+    opacity: 1;
+}
+
+.end {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
