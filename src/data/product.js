@@ -4,7 +4,7 @@ const products = [
         title: 'Steel Keyring',
         content: '키링 A',
         price: 520000,
-        image: '/img/key.png',
+        image: '/img/keyring.png',
     },
 
     {
