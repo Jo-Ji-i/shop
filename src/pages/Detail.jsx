@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import products from '../data/product';
 import styled from 'styled-components';
-import { ShopHeader } from './shop';
+import { ShopHeader } from './Shop';
 import Tap from '../components/Tap';
 import '../utils/animation.css';
 import { StockContext } from '../App';
@@ -16,7 +16,7 @@ const Detail = ({ products }) => {
 
     let item = products.find((item) => item.productId === parseInt(id));
     if (!item) {
-        return <div>상품을 찾을 수 없습니다.</div>;
+        return <div>상품을 찾을 수 없습니다요.</div>;
     }
 
     useEffect(() => {
