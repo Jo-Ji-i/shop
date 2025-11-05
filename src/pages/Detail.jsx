@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import products from '../data/product';
 import styled from 'styled-components';
-import { ShopHeader } from './shop';
+import { ShopHeader } from './Shop';
 import Tap from '../components/Tap';
 import '../utils/animation.css';
 import { StockContext } from '../App';

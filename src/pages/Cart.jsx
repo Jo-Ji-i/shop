@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { increase, decrease } from '../stores/cartSlice.js';
 import { useDispatch } from 'react-redux';
 import { changeName, changeAge } from '../stores/userSlice.js';
-import { ShopHeader } from './shop.jsx';
+import { ShopHeader } from './Shop.jsx';
 import products from '../data/product';
 
 const CartHeader = () => {
