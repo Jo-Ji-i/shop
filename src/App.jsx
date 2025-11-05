@@ -1,41 +1,74 @@
 import './App.css';
+import React from 'react';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Link,
+    useNavigate,
+    Outlet,
+} from 'react-router-dom';
+import Home from './pages/home';
+import Shop from './pages/Shop';
+import Detail from './pages/detail';
+import About from './pages/About';
+import Event from './components/Event';
+import Cart from './pages/Cart';
+import productData from './data/product';
+import { useState } from 'react';
+
+export let StockContext = React.createContext();
 
 function App() {
+    let [products] = useState(productData);
+    let [stock, setStock] = useState([10, 11, 12]);
+
     return (
-        <>
-            <div className="flex bg-gray-100 w-full justify-start items-center h-12 text-base px-7">
-                <div> ShoeShop </div>
-                <div className="flex text-gray-500 text-sm gap-2 px-4">
-                    <div> Home </div>
-                    <div> Cart</div>
-                </div>
-            </div>
-            <div className="flex flex-col w-full h-auto">
-                <div className="h-80 bg-cover justify-center bg-[url(./bg.png)] mb-8"></div>
-                <div className="grid grid-cols-3 gap-3 justify-items-center">
-                    <div className="flex flex-col w-full justify-center items-center m-2">
-                        <div className="w-60 h-60 bg-[url('/img/product1.png')] bg-cover bg-center mb-3" />
-                        <h4> 상품명</h4>
-                        <p> 상품정보</p>
-                    </div>
-                    <div className="flex flex-col w-full justify-center items-center m-2">
-                        <div className="w-60 h-60 bg-[url('/img/product2.png')] bg-cover bg-center mb-3" />
-                        <h4> 상품명</h4>
-                        <p> 상품정보</p>
-                    </div>
-                    <div className="flex flex-col w-full justify-center items-center m-2">
-                        <img
-                            src={process.env.PUBLIC_URL + '/product3.png'}
-                            className="w-60 h-60 bg-cover bg-center mb-3"
+        <div>
+            <StockContext.Provider value={{ stock, products }}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+
+                    <Route path="/shop" element={<Shop products={products} />}>
+                        <Route path="event" element={<Event />}>
+                            <Route
+                                path="sale"
+                                element={
+                                    <div className="px-2 text-xl font-bold ">
+                                        All Sale
+                                    </div>
+                                }
+                            />
+                            <Route
+                                path="new"
+                                element={
+                                    <div className="px-5 text-xl font-bold">
+                                        New Product
+                                    </div>
+                                }
+                            />
+                        </Route>
+                    </Route>
+
+                    <Route
+                        path="/detail/:id"
+                        element={<Detail products={products} />}
+                    />
+
+                    <Route path="/cart" element={<Cart />} />
+
+                    <Route path="/about" element={<About />}>
+                        <Route path="member" element={<div> 멤버 소개 </div>} />
+                        <Route
+                            path="location"
+                            element={<div> 위치 정보 </div>}
                         />
-                        <h4> 상품명</h4>
-                        <p> 상품정보</p>
-                    </div>
-                    <div> d</div>
-                    <div> d</div>
-                </div>
-            </div>
-        </>
+                    </Route>
+
+                    <Route path="*" element={<div> 없는 페이지 </div>} />
+                </Routes>
+            </StockContext.Provider>
+        </div>
     );
 }
 

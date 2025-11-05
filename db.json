@@ -1,0 +1,25 @@
+{
+    "products": [
+        {
+            "id": 4,
+            "title": "long sleeve",
+            "content": "Long Description Product",
+            "price": "250000",
+            "image": "/img/logsleeve.png"
+        },
+        {
+            "id": 5,
+            "title": "cup",
+            "content": "Another Long Description Product",
+            "price": "300000",
+            "image": "/img/cup.png"
+        },
+        {
+            "id": 6,
+            "title": "clock",
+            "content": "Yet Another Long Description Product",
+            "price": "350000",
+            "image": "/img/clock.png"
+        }
+    ]
+}
