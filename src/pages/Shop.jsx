@@ -2,6 +2,7 @@ import React from 'react';
 import Product from '../components/Products.jsx';
 import { Outlet } from 'react-router-dom';
 import AxiosProduct from '../Api/AxiosProduct.jsx';
+import { Link } from 'react-router-dom';
 
 export const ShopHeader = () => {
     return (
@@ -11,7 +12,9 @@ export const ShopHeader = () => {
             </div>
             <div className="flex gap-2 px-4 text-sm text-red-600">
                 <div> Category </div>
-                <div> Cart</div>
+                <div>
+                    <Link to="/cart"> Cart </Link>
+                </div>
             </div>
         </div>
     );

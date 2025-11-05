@@ -14,7 +14,7 @@ const Detail = ({ products }) => {
     let [count, setCount] = useState(1);
     let [fade, setFade] = useState('start');
 
-    let item = products.find((item) => item.id === parseInt(id));
+    let item = products.find((item) => item.productId === parseInt(id));
     if (!item) {
         return <div>상품을 찾을 수 없습니다.</div>;
     }
@@ -54,7 +54,6 @@ const Detail = ({ products }) => {
                     <div>{stock}</div>
                     <AmountBox />
                     <PayBox />
-                    <Input className="mt-4" />
                 </div>
             </div>
         );
@@ -64,7 +63,7 @@ const Detail = ({ products }) => {
         return (
             <>
                 <div
-                    className={`${fade} flex items-center justify-center w-full h-8 py-2 text-base font-bold text-white bg-red-500`}
+                    className={`${fade} flex items-center mt-4 justify-center w-full h-8 py-2 text-base font-bold text-white bg-red-500`}
                 >
                     <span>3초 이내 구매시 할인</span>{' '}
                 </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { increase, decrease } from '../stores/store.js';
+import { increase, decrease } from '../stores/cartSlice.js';
 import { useDispatch } from 'react-redux';
-import { changeName } from '../stores/store.js';
-import cartData from '../data/cart.js';
+import { changeName, changeAge } from '../stores/userSlice.js';
 import { ShopHeader } from './shop.jsx';
+import products from '../data/product';
 
 const CartHeader = () => {
     return (
@@ -46,83 +46,108 @@ const AmountBtn = ({ amount, id }) => {
     );
 };
 
-const CartProduct = () => {
+const CartProduct = ({ products }) => {
     let state = useSelector((state) => state);
+    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+
+    if (!cart || cart.length === 0) {
+        return <div>장바구니가 비어 있습니다.</div>;
+    }
+
     return (
         <>
-            {state.cart.map((item, index) => (
-                <div
-                    key={item.id}
-                    className="grid grid-flow-col w-full grid-cols-[0.5fr_4fr_1.5fr_1.5fr_1.5fr] font-pre text-center border-b-2 justify-center items-center py-5"
-                >
-                    <div>
-                        <input type="checkbox" className="w-4 h-4" />
-                    </div>
-                    <div className="flex items-center gap-12 px-10">
-                        <div
-                            style={{
-                                backgroundImage: `url(${item.image})`,
-                            }}
-                            alt="Product"
-                            className="flex items-center w-20 h-20 bg-center bg-no-repeat bg-cover justify-self-center"
-                        ></div>
-                        <div className="flex flex-col items-start gap-1.5">
-                            <h4 className="text-sm font-semibold underline underline-offset-2">
-                                SSI
-                            </h4>
-                            <h4 className="text-base font-bold">{item.name}</h4>
-                            <h4 className="text-sm ">
-                                {item.price.toLocaleString()}원
-                            </h4>
-                            <h4 className="text-sm text-red-400">
-                                {item.sale}% :{' '}
-                                {(
-                                    item.price -
-                                    item.price * (item.sale / 100)
-                                ).toLocaleString()}
-                                원
-                            </h4>
-                            <h4 className="text-xs">
-                                {' '}
-                                [옵션] : {item.option}{' '}
-                            </h4>
-                        </div>
-                    </div>
-                    <AmountBtn amount={item.count} id={item.id} />
+            {cart.map((item, index) => {
+                const product = products.find(
+                    (product) => product.productId === item.productId
+                );
 
-                    <div className="flex flex-col items-center gap-3 p-3">
-                        <div className="text-base font-semibold">
-                            {(
-                                (item.price - item.price * (item.sale / 100)) *
-                                item.count
-                            ).toLocaleString()}
-                            원
+                if (!product) {
+                    return (
+                        <div key={index} className="text-red-500">
+                            상품 정보가 없습니다.
                         </div>
-                        <div
-                            onClick={() => dispatch(changeName())}
-                            className="flex items-center justify-center w-24 h-8 text-sm text-white bg-black rounded-sm font-pre"
-                        >
-                            바로 구매하기
+                    );
+                }
+
+                const discountedPrice =
+                    product.price - product.price * (product.sale / 100);
+
+                return (
+                    <div
+                        key={item.cartId}
+                        className="grid grid-flow-col w-full grid-cols-[0.5fr_4fr_1.5fr_1.5fr_1.5fr] font-pre text-center border-b-2 justify-center items-center py-5"
+                    >
+                        <div>
+                            <input type="checkbox" className="w-4 h-4" />
                         </div>
+                        <div className="flex items-center gap-12 px-10">
+                            <div
+                                style={{
+                                    backgroundImage: `url(${product.image})`,
+                                }}
+                                alt="Product"
+                                className="flex items-center w-20 h-20 bg-center bg-no-repeat bg-cover justify-self-center"
+                            ></div>
+                            <div className="flex flex-col items-start gap-1.5">
+                                <h4 className="text-sm font-semibold underline underline-offset-2">
+                                    SSI
+                                </h4>
+                                <h4 className="text-base font-bold">
+                                    {product.name}
+                                </h4>
+                                <h4 className="text-sm ">
+                                    {product.price.toLocaleString()}원
+                                </h4>
+                                <h4 className="text-sm text-red-400">
+                                    {product.sale}% :{' '}
+                                    {discountedPrice.toLocaleString()}원
+                                </h4>
+                                <h4 className="text-xs">
+                                    {' '}
+                                    [옵션] : {item.option}{' '}
+                                </h4>
+                            </div>
+                        </div>
+                        <AmountBtn amount={item.count} id={item.id} />
+
+                        <div className="flex flex-col items-center gap-3 p-3">
+                            <div className="text-base font-semibold">
+                                {discountedPrice.toLocaleString()}원
+                            </div>
+                            <div
+                                onClick={() => dispatch(changeAge())}
+                                className="flex items-center justify-center w-24 h-8 text-sm text-white bg-black rounded-sm font-pre"
+                            >
+                                바로 구매하기
+                            </div>
+                        </div>
+                        {!isNaN(item.tfee) ? (
+                            <p className="text-sm font-semibold">
+                                {parseFloat(item.tfee).toLocaleString()}원
+                            </p>
+                        ) : (
+                            <p className="text-sm font-semibold">{item.tfee}</p>
+                        )}
                     </div>
-                    {!isNaN(item.tfee) ? (
-                        <p className="text-sm font-semibold">
-                            {parseFloat(item.tfee).toLocaleString()}원
-                        </p>
-                    ) : (
-                        <p className="text-sm font-semibold">{item.tfee}</p>
-                    )}
-                </div>
-            ))}
+                );
+            })}
         </>
     );
 };
 
-const TotalProduct = () => {
-    let cart = useSelector((state) => state.cart);
+const TotalProduct = ({ products }) => {
+    const cart = useSelector((state) => state.cart || []); // 기본값 설정
+
+    // cart가 없거나 비어있으면 0으로 초기화
+    if (!cart.length) {
+        return;
+    }
+
     const total = cart.reduce((acc, item) => {
-        const salePrice = item.price - item.price * (item.sale / 100);
+        const product = products.find((p) => p.productId === item.productId);
+        if (!product) return acc;
+        const salePrice = product.price - product.price * (product.sale / 100);
         return acc + salePrice * item.count;
     }, 0);
 
@@ -167,7 +192,7 @@ const Cart = () => {
                 <CartHeader />
 
                 {/* 상품 리스트  */}
-                <CartProduct />
+                <CartProduct products={products} />
 
                 <div className="flex self-start gap-3 p-5 text-sm font-semibold">
                     <div className="p-4 border"> 선택상품 삭제 </div>
@@ -175,7 +200,7 @@ const Cart = () => {
                 </div>
 
                 {/* 결제 정보 */}
-                <TotalProduct />
+                <TotalProduct products={products} />
             </div>
         </div>
     );

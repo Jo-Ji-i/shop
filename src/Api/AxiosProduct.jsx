@@ -7,9 +7,11 @@ const AxiosProduct = () => {
     let [data, setData] = useState([]);
     let [isload, setIsLoad] = useState(true);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // env에서 API 주소 가져오기
+
     const fetchData = () => {
         axios
-            .get('http://localhost:4000/products')
+            .get(`${apiUrl}/products`)
             .then((response) => {
                 setData(response.data);
                 setIsLoad(false);
