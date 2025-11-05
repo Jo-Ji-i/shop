@@ -8,7 +8,7 @@ import {
     useNavigate,
     Outlet,
 } from 'react-router-dom';
-import Home from './pages/home';
+import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Detail from './pages/detail';
 import About from './pages/About';
